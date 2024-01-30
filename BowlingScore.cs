@@ -1,56 +1,72 @@
 using System;
-using System.Linq;
-using BowlingGame;
 
 public class BowlingScore : IBowlingScore
 {
-    private int score = 0;
-    List<int> spareBonus = new List<int>();
-    List<int> strikeBonus = new List<int>();
+    private int MAX_PINS_PER_FRAME = 10;
+    private Random randNumOfPinsKnockedDown = new Random();
+
+    private int[] rolls = new int[21];
+    private int currentRoll = 0;
 
     public void RecordFrame(params int[] pinsKnockedDown)
     {
-        this.score += pinsKnockedDown.Sum();
-    }
-
-    public void CalculateScore()
-    {
-        if (spareBonus.Count == 2)
+        for (var index = 0; index < pinsKnockedDown.Length; index++)
         {
-            int[] spareBonusToAray = spareBonus.ToArray();
-            score.RecordFrame(new int[] { spareBonusToAray[0], spareBonusToAray[1], firstRoll });
-            spareBonus.Clear();
+            rolls[currentRoll++] = pinsKnockedDown[index];
         }
-        else if (strikeBonus.Count == 2)
-        {
-            int[] strikeBonusToArray = strikeBonus.ToArray();
-            score.RecordFrame(new int[] { strikeBonusToArray[0], strikeBonusToArray[1], firstRoll });
-            strikeBonus.Clear();
-            strikeBonus.Add(10);
-        }
-        else if (strikeBonus.Count == 1)
-        {
-            int[] strikeBonusToArray = strikeBonus.ToArray();
-            score.RecordFrame(new int[] { strikeBonusToArray[0], firstRoll, secondRoll });
-            strikeBonus.Clear();
-        }
-    }
-
-    public void AddStrikeBonus()
-    {
-        strikeBonus.Add(10);
-    }
-
-    public void AddSpareBonus(int pins)
-    {
-        spareBonus.Add(pins)
     }
 
     public int DisplayScore
     {
         get
         {
-            return this.score;
+            var score = 0;
+            var rollIndex = 0;
+            for (var frame = 0; frame < 10; frame++)
+            {
+                if (IsStrike(rollIndex))
+                {
+                    score += GetBonusScore(rollIndex);
+                    rollIndex++;
+                }
+                else if (IsSpare(rollIndex))
+                {
+                    score += GetBonusScore(rollIndex);
+                    rollIndex += 2;
+                }
+                else
+                {
+                    score += GetStandardScore(rollIndex);
+                    rollIndex += 2;
+                }
+            }
+            return score;
         }
     }
+
+    public int Roll(int pinsKnockedDownOnFirstRoll = 0)
+    {
+        return randNumOfPinsKnockedDown.Next(MAX_PINS_PER_FRAME + 1 - pinsKnockedDownOnFirstRoll);
+    }
+
+    private bool IsSpare(int rollIndex)
+    {
+        return rolls[rollIndex] + rolls[rollIndex + 1] == 10;
+    }
+
+    private bool IsStrike(int rollIndex)
+    {
+        return rolls[rollIndex] == 10;
+    }
+
+    private int GetStandardScore(int rollIndex)
+    {
+        return rolls[rollIndex] + rolls[rollIndex + 1];
+    }
+
+    private int GetBonusScore(int rollIndex)
+    {
+        return rolls[rollIndex] + rolls[rollIndex + 1] + rolls[rollIndex + 2];
+    }
+
 }

@@ -1,6 +1,4 @@
 using System;
-using BowlingGame;
-
 
 public interface IBowlingScore
 {
