@@ -1,0 +1,16 @@
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\BowlingGame.exe
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\BowlingGame.deps.json
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\BowlingGame.runtimeconfig.json
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\BowlingGame.runtimeconfig.dev.json
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\BowlingGame.dll
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\ref\BowlingGame.dll
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\bin\Debug\net5.0\BowlingGame.pdb
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.csprojAssemblyReference.cache
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.AssemblyInfoInputs.cache
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.AssemblyInfo.cs
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.csproj.CoreCompileInputs.cache
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.dll
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\ref\BowlingGame.dll
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.pdb
+C:\Users\joshu\OneDrive\Documents\Job Applying\After Lay Off from Bushel\Razor Assessment\BowlingGame\obj\Debug\net5.0\BowlingGame.genruntimeconfig.cache
