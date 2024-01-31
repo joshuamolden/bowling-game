@@ -14,11 +14,11 @@ public class BowlingScore : IBowlingScore
     {
         this.score += pinsKnockedDown.Sum();
         Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"Number of Times RecordFrame has been called:\t{numOfTimesRecordFrameIsCalled++}\n");
+        Console.WriteLine($"Your score after frame {this.numOfTimesRecordFrameIsCalled++} is:\t{this.score}\n");
         Console.ResetColor();
     }
 
-    public void CalculateScore(int pinsKnockedDownOnFirstRoll, int pinsKnockedDownOnSecondRoll = -1)
+    public void CalculateScoreOfPastFrame(int pinsKnockedDownOnFirstRoll, int pinsKnockedDownOnSecondRoll = -1)
     {
         if (spareBonus.Count == 2)
         {

@@ -10,8 +10,8 @@ public static class GameMessages
         {
             if (Console.ReadKey().Key == ConsoleKey.T)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"\n\nYour current score is:\t{score.DisplayScore}\n\nPlease press enter to bowl next ball.\n");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine($"\nYour current score is:\t{score.DisplayScore}\nPlease press enter to bowl next ball.\n");
                 Console.ResetColor();
             }
         }
