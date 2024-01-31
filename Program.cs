@@ -7,6 +7,13 @@ namespace BowlingGame
     {
         static void Main(string[] args)
         {
+            int MAX_PINS_PER_FRAME = 10;
+            Random randNumOfPinsKnockedDown = new Random();
+            int Roll(int pinsKnockedDownOnFirstRoll = 0)
+            {
+                return randNumOfPinsKnockedDown.Next(MAX_PINS_PER_FRAME + 1 - pinsKnockedDownOnFirstRoll);
+            }
+
             BowlingScore score = new BowlingScore();
 
             for (int frameNumber = 1; frameNumber <= 9; frameNumber++)
@@ -14,11 +21,10 @@ namespace BowlingGame
                 GameMessages.FrameNumber(frameNumber);
                 GameMessages.InstructionsBeforeEachRoll(frameNumber, "1st", score);
 
-                int pinsKnockedDownOnFirstRoll = score.Roll();
+                int pinsKnockedDownOnFirstRoll = Roll();
 
                 score.CalculateScore(pinsKnockedDownOnFirstRoll);
 
-                // Alert user what they rolled
                 if (pinsKnockedDownOnFirstRoll == 10)
                 {
                     GameMessages.StrikeMessage();
@@ -32,7 +38,7 @@ namespace BowlingGame
 
                 GameMessages.InstructionsBeforeEachRoll(frameNumber, "2nd", score);
 
-                int pinsKnockedDownOnSecondRoll = score.Roll(pinsKnockedDownOnFirstRoll);
+                int pinsKnockedDownOnSecondRoll = Roll(pinsKnockedDownOnFirstRoll);
 
                 score.CalculateScore(pinsKnockedDownOnFirstRoll, pinsKnockedDownOnSecondRoll);
 
@@ -53,9 +59,8 @@ namespace BowlingGame
             GameMessages.FrameNumber(10);
             GameMessages.InstructionsBeforeEachRoll(10, "1st", score);
 
-            int pinsKnockedDownOnFirstRollOfLastFrame = score.Roll();
+            int pinsKnockedDownOnFirstRollOfLastFrame = Roll();
 
-            // Alert user what they rolled
             if (pinsKnockedDownOnFirstRollOfLastFrame == 10)
             {
                 GameMessages.StrikeMessage();
@@ -64,7 +69,7 @@ namespace BowlingGame
 
                 GameMessages.InstructionsBeforeEachRoll(10, "2nd", score);
 
-                int pinsKnockedDownOnSecondRollOfLastFrameAfterStrike = score.Roll();
+                int pinsKnockedDownOnSecondRollOfLastFrameAfterStrike = Roll();
 
                 if (pinsKnockedDownOnSecondRollOfLastFrameAfterStrike == 10)
                 {
@@ -72,7 +77,7 @@ namespace BowlingGame
                     score.CalculateScore(pinsKnockedDownOnSecondRollOfLastFrameAfterStrike);
                     GameMessages.InstructionsBeforeEachRoll(10, "3rd", score);
 
-                    int pinsKnockedDownOnTirdRollOfLastFrameDoubleStrike = score.Roll();
+                    int pinsKnockedDownOnTirdRollOfLastFrameDoubleStrike = Roll();
 
                     if (pinsKnockedDownOnTirdRollOfLastFrameDoubleStrike == 10)
                     {
@@ -92,8 +97,8 @@ namespace BowlingGame
                     score.CalculateScore(pinsKnockedDownOnSecondRollOfLastFrameAfterStrike);
                     GameMessages.InstructionsBeforeEachRoll(10, "3rd", score);
 
-                    int pinsKnockedDownOnLastRollOfTenthFrame = score.Roll(pinsKnockedDownOnSecondRollOfLastFrameAfterStrike);
-                    GameMessages.PinsKnockedDownMessage(pinsKnockedDownOnSecondRollOfLastFrameAfterStrike, "third");
+                    int pinsKnockedDownOnLastRollOfTenthFrame = Roll(pinsKnockedDownOnSecondRollOfLastFrameAfterStrike);
+                    GameMessages.PinsKnockedDownMessage(pinsKnockedDownOnLastRollOfTenthFrame, "third");
 
                     score.RecordFrame(pinsKnockedDownOnFirstRollOfLastFrame, pinsKnockedDownOnSecondRollOfLastFrameAfterStrike, pinsKnockedDownOnLastRollOfTenthFrame);
                 }
@@ -104,7 +109,7 @@ namespace BowlingGame
                 score.CalculateScore(pinsKnockedDownOnFirstRollOfLastFrame);
                 GameMessages.InstructionsBeforeEachRoll(10, "2nd", score);
 
-                int pinsKnockedDownonSecondRollofLastFrame = score.Roll(pinsKnockedDownOnFirstRollOfLastFrame);
+                int pinsKnockedDownonSecondRollofLastFrame = Roll(pinsKnockedDownOnFirstRollOfLastFrame);
 
                 if (pinsKnockedDownOnFirstRollOfLastFrame + pinsKnockedDownonSecondRollofLastFrame == 10)
                 {
@@ -112,7 +117,7 @@ namespace BowlingGame
                     score.CalculateScore(pinsKnockedDownOnFirstRollOfLastFrame, pinsKnockedDownonSecondRollofLastFrame);
                     GameMessages.InstructionsBeforeEachRoll(10, "3rd", score);
 
-                    int pinsKnockedDownOnLastFrameAfterSpare = score.Roll();
+                    int pinsKnockedDownOnLastFrameAfterSpare = Roll();
 
                     GameMessages.PinsKnockedDownMessage(pinsKnockedDownOnLastFrameAfterSpare, "third");
                     score.RecordFrame(pinsKnockedDownOnFirstRollOfLastFrame, pinsKnockedDownonSecondRollofLastFrame, pinsKnockedDownOnLastFrameAfterSpare);
@@ -120,6 +125,7 @@ namespace BowlingGame
                 else
                 {
                     GameMessages.PinsKnockedDownMessage(pinsKnockedDownonSecondRollofLastFrame, "second");
+                    score.CalculateScore(pinsKnockedDownOnFirstRollOfLastFrame, pinsKnockedDownonSecondRollofLastFrame);
                     score.RecordFrame(pinsKnockedDownOnFirstRollOfLastFrame, pinsKnockedDownonSecondRollofLastFrame);
                 }
             }

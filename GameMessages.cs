@@ -10,7 +10,9 @@ public static class GameMessages
         {
             if (Console.ReadKey().Key == ConsoleKey.T)
             {
-                Console.WriteLine($"\nYour current score is:\t{score.DisplayScore}\n\nPlease press enter to bowl next ball");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\n\nYour current score is:\t{score.DisplayScore}\n\nPlease press enter to bowl next ball.\n");
+                Console.ResetColor();
             }
         }
     }
@@ -46,7 +48,7 @@ public static class GameMessages
     public static void EndingScoreMessage(BowlingScore score)
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine($"\nYour total score for the game was:\t{score.DisplayScore}");
+        Console.WriteLine($"Your total score for the game was:\t{score.DisplayScore}\n");
         Console.ResetColor();
     }
 }
