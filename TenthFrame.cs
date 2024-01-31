@@ -1,24 +1,23 @@
 using System;
 
-public class TenthFrame
+public class TenthFrame : BaseFrame
 {
-    private int MAX_PINS_PER_FRAME = 10;
-    private Random randNumOfPinsKnockedDown = new Random();
-
-    private int frameNumber = 10;
-    private int pinsKnockedDownOnFistRoll;
-    private int pinsKnockedDownOnSecondRoll;
     private int pinsKnockedDownOnBonusRoll;
     private bool hasBonusRoll = false;
 
     public bool HasBonusRoll { get { return this.hasBonusRoll; } }
 
+    public TenthFrame(int frameNumber) : base(frameNumber)
+    {
+        this.frameNumber = frameNumber;
+    }
+
     public void FirstRoll(BowlingScore score)
     {
         GameMessages.FrameNumber(this.frameNumber);
-        GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "1st", score);
+        int userInputForFirstRoll = GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "1st", score);
 
-        this.pinsKnockedDownOnFistRoll = this.randNumOfPinsKnockedDown.Next(this.MAX_PINS_PER_FRAME + 1);
+        this.pinsKnockedDownOnFistRoll = userInputForFirstRoll == -1 ? this.Roll() : userInputForFirstRoll;
 
         if (this.pinsKnockedDownOnFistRoll == 10)
         {
@@ -35,11 +34,11 @@ public class TenthFrame
 
     public void SecondRoll(BowlingScore score)
     {
-        GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "2nd", score);
+        int userInputForSecondRoll = GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "2nd", score);
 
         if (this.hasBonusRoll)
         {
-            this.pinsKnockedDownOnSecondRoll = this.randNumOfPinsKnockedDown.Next(this.MAX_PINS_PER_FRAME + 1);
+            this.pinsKnockedDownOnSecondRoll = userInputForSecondRoll == -1 ? this.Roll() : userInputForSecondRoll;
 
             if (this.pinsKnockedDownOnSecondRoll == 10)
             {
@@ -54,7 +53,8 @@ public class TenthFrame
         }
         else
         {
-            this.pinsKnockedDownOnSecondRoll = this.randNumOfPinsKnockedDown.Next(this.MAX_PINS_PER_FRAME + 1 - this.pinsKnockedDownOnFistRoll);
+            int actualNumberOfPinsKnockedDownOnSecondRoll = userInputForSecondRoll == -1 ? this.Roll(this.pinsKnockedDownOnFistRoll) : userInputForSecondRoll;
+            this.pinsKnockedDownOnSecondRoll = this.RollScoreAdjuster(this.pinsKnockedDownOnFistRoll, actualNumberOfPinsKnockedDownOnSecondRoll);
 
             if (this.pinsKnockedDownOnFistRoll + this.pinsKnockedDownOnSecondRoll == 10)
             {
@@ -77,20 +77,31 @@ public class TenthFrame
         {
             if (this.hasBonusRoll)
             {
-                GameMessages.InstructionsBeforeEachRoll(frameNumber, "3rd", score);
+                int userInputForBonusRoll = GameMessages.InstructionsBeforeEachRoll(frameNumber, "3rd", score);
 
-                this.pinsKnockedDownOnBonusRoll = this.randNumOfPinsKnockedDown.Next(MAX_PINS_PER_FRAME + 1);
-
-                if (this.pinsKnockedDownOnBonusRoll == 10)
+                if (this.pinsKnockedDownOnSecondRoll == 10)
                 {
-                    GameMessages.StrikeMessage();
+                    this.pinsKnockedDownOnBonusRoll = userInputForBonusRoll == -1 ? this.Roll() : userInputForBonusRoll;
+
+                    if (this.pinsKnockedDownOnBonusRoll == 10)
+                    {
+                        GameMessages.StrikeMessage();
+                    }
+                    else
+                    {
+                        GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnBonusRoll, "3rd");
+                    }
+
+                    score.RecordFrame(this.pinsKnockedDownOnFistRoll, this.pinsKnockedDownOnSecondRoll, this.pinsKnockedDownOnBonusRoll);
                 }
                 else
                 {
-                    GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnBonusRoll, "3rd");
-                }
+                    int actualNumberOfPinsKnockedDownOnBonusRoll = userInputForBonusRoll == -1 ? this.Roll(this.pinsKnockedDownOnSecondRoll) : userInputForBonusRoll;
+                    this.pinsKnockedDownOnBonusRoll = this.RollScoreAdjuster(this.pinsKnockedDownOnSecondRoll, actualNumberOfPinsKnockedDownOnBonusRoll);
 
-                score.RecordFrame(this.pinsKnockedDownOnFistRoll, this.pinsKnockedDownOnSecondRoll, this.pinsKnockedDownOnBonusRoll);
+                    GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnBonusRoll, "3rd");
+                    score.RecordFrame(this.pinsKnockedDownOnFistRoll, this.pinsKnockedDownOnSecondRoll, this.pinsKnockedDownOnBonusRoll);
+                }
 
             }
             else

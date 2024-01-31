@@ -24,7 +24,7 @@ namespace BowlingGame
                 }
             }
 
-            TenthFrame lastFrame = new TenthFrame();
+            TenthFrame lastFrame = new TenthFrame(10);
 
             lastFrame.FirstRoll(score);
             lastFrame.SecondRoll(score);

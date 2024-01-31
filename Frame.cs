@@ -1,29 +1,22 @@
 using System;
 
-public class Frame
+public class Frame : BaseFrame
 {
-    private int MAX_PINS_PER_FRAME = 10;
-    private Random randNumOfPinsKnockedDown = new Random();
-
-    private int frameNumber;
-    private int pinsKnockedDownOnFistRoll;
-    private int pinsKnockedDownOnSecondRoll;
     private bool isStrike = false;
 
+    public bool IsStrike { get { return this.isStrike; } }
 
-    public Frame(int frameNumber)
+    public Frame(int frameNumber) : base(frameNumber)
     {
         this.frameNumber = frameNumber;
     }
 
-    public bool IsStrike { get { return this.isStrike; } }
-
     public void FirstRoll(BowlingScore score)
     {
         GameMessages.FrameNumber(this.frameNumber);
-        GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "1st", score);
+        int userInputForFirstRoll = GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "1st", score);
 
-        this.pinsKnockedDownOnFistRoll = this.randNumOfPinsKnockedDown.Next(this.MAX_PINS_PER_FRAME + 1);
+        this.pinsKnockedDownOnFistRoll = userInputForFirstRoll == -1 ? this.Roll() : userInputForFirstRoll;
 
         if (this.pinsKnockedDownOnFistRoll == 10)
         {
@@ -34,7 +27,7 @@ public class Frame
         }
         else
         {
-            GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnFistRoll, "first");
+            GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnFistRoll, "1st");
             score.CalculateScoreOfPastFrame(this.pinsKnockedDownOnFistRoll);
 
         }
@@ -46,9 +39,10 @@ public class Frame
         {
             if (!this.isStrike)
             {
-                GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "2nd", score);
+                int userInputForSecondRoll = GameMessages.InstructionsBeforeEachRoll(this.frameNumber, "2nd", score);
+                int actualNumberOfPinsKnockedDownOnSecondRoll = userInputForSecondRoll == -1 ? this.Roll(this.pinsKnockedDownOnFistRoll) : userInputForSecondRoll;
 
-                this.pinsKnockedDownOnSecondRoll = this.randNumOfPinsKnockedDown.Next(this.MAX_PINS_PER_FRAME + 1 - this.pinsKnockedDownOnFistRoll);
+                this.pinsKnockedDownOnSecondRoll = this.RollScoreAdjuster(this.pinsKnockedDownOnFistRoll, actualNumberOfPinsKnockedDownOnSecondRoll);
 
                 if (this.pinsKnockedDownOnFistRoll + this.pinsKnockedDownOnSecondRoll == 10)
                 {
@@ -59,7 +53,7 @@ public class Frame
                 }
                 else
                 {
-                    GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnSecondRoll, "second");
+                    GameMessages.PinsKnockedDownMessage(this.pinsKnockedDownOnSecondRoll, "2nd");
                     score.CalculateScoreOfPastFrame(this.pinsKnockedDownOnFistRoll, this.pinsKnockedDownOnSecondRoll);
                     score.RecordFrame(this.pinsKnockedDownOnFistRoll, this.pinsKnockedDownOnSecondRoll);
                 }

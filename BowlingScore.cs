@@ -13,9 +13,8 @@ public class BowlingScore : IBowlingScore
     public void RecordFrame(params int[] pinsKnockedDown)
     {
         this.score += pinsKnockedDown.Sum();
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"Your score after frame {this.numOfTimesRecordFrameIsCalled++} is:\t{this.score}\n");
-        Console.ResetColor();
+        GameMessages.RecordFrameMessage(this.numOfTimesRecordFrameIsCalled, this.score);
+        this.numOfTimesRecordFrameIsCalled++;
     }
 
     public void CalculateScoreOfPastFrame(int pinsKnockedDownOnFirstRoll, int pinsKnockedDownOnSecondRoll = -1)
